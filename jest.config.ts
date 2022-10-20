@@ -163,7 +163,7 @@ export default {
     // ],
 
     // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-    testPathIgnorePatterns: ["\\\\node_modules\\\\", "confirm-account.test.ts"],
+    // testPathIgnorePatterns: ["\\\\node_modules\\\\"],
 
     // The regexp pattern or array of patterns that Jest uses to detect test files
     // testRegex: [],
@@ -194,5 +194,5 @@ export default {
 
     // Whether to use watchman for file crawling
     // watchman: true,
-    testTimeout: 70000,
+    testTimeout: 100000,
 };

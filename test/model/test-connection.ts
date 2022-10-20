@@ -21,5 +21,5 @@ export default async () => {
 };
 
 export const dropDB = async (db: DataSource) => {
-    return db.initialize().then((db) => db.dropDatabase());
+    return db.dropDatabase();
 };

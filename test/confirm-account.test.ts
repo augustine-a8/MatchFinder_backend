@@ -11,7 +11,7 @@ import { request } from "express";
 
 let db: DataSource;
 
-interface User {
+export interface User {
     id: string;
     email: string;
     password: string;
@@ -30,7 +30,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-    return await closeDB(db);
+    return await dropDB(db);
     // return dropDB(db);
 });
 
@@ -56,6 +56,7 @@ describe("tests for auth resolvers: confirmAccount & login", () => {
         };
 
         const response = await graphQlTestClient(confirmAccountMutation, input, context);
+        console.log(response);
         expect(response?.data?.confirmAccount).toHaveProperty("accountStatus", "ACTIVE");
     });
 

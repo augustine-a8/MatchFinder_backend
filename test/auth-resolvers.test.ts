@@ -30,7 +30,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-    return await closeDB(db);
+    return await dropDB(db);
 });
 
 describe("tests for auth resolvers: register & login", () => {
@@ -54,6 +54,7 @@ describe("tests for auth resolvers: register & login", () => {
         };
 
         const response = await graphQlTestClient(registerMutation, input, context);
+        console.log(response);
 
         expect(response?.data?.register).toHaveProperty("email", input.email);
         expect(response?.data?.register).toHaveProperty("password");
