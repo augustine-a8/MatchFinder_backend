@@ -16,7 +16,6 @@ export default gql`
         username: String!
         gender: String!
         age: Int!
-        user: User!
     }
 
     enum AccountStatus {
@@ -26,11 +25,20 @@ export default gql`
 
     type Query {
         getMe(id: ID!): User!
+        getProfile(profileId: ID!): Profile!
     }
 
     type Mutation {
         register(email: String!, password: String!): User!
         login(email: String!, password: String!): User!
         confirmAccount(confirmationCode: String!): User!
+        createProfile(createProfileInput: CreateProfileInput): Profile!
+        updateProfile(profileId: ID!, updateProfileInput: CreateProfileInput): Profile!
+    }
+
+    input CreateProfileInput {
+        username: String!
+        age: Int!
+        gender: String!
     }
 `;
