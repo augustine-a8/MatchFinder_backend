@@ -46,5 +46,41 @@ export default {
 
             return _user;
         },
+        resendConfirmationCode: async (_: any, __: any, context: ContextObj) => {
+            const { db, req } = context;
+
+            const userRepository = db.getRepository(User);
+
+            // get token from request header
+            const authHeader = req?.headers.authorization;
+            const token = authHeader?.split("Bearer ")[1];
+
+            if (!token) {
+                throw new Error("ResendConfirmationCode: JWT should be provided");
+            }
+
+            const { id, email } = verifyToken(token);
+
+            // find user in db with details obtainede from verifying jwt
+            const user = await userRepository.findOne({ where: { id, email } });
+
+            if (!user) {
+                throw new Error("ResendConfirmationCode: Incorrect token provided");
+            }
+
+            const newToken = signPayload({ id: user.id, email: user.email });
+            const newConfirmationCode = totp.gen(newToken, { time: 60 * 60 * 3 });
+
+            user.confirmationCode = newConfirmationCode;
+
+            const _user = await user.save();
+
+            sendMail(_user.email, _user.confirmationCode);
+
+            return {
+                ..._user,
+                token: newToken,
+            };
+        },
     },
 };

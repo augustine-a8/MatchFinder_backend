@@ -38,7 +38,9 @@ export default gql`
     type Mutation {
         register(email: String!, password: String!): User!
         login(email: String!, password: String!): User!
+        resetPassword(newPassword: String!): String!
         confirmAccount(confirmationCode: String!): User!
+        resendConfirmationCode: User!
         createProfile(createProfileInput: CreateProfileInput): Profile!
         updateProfile(profileId: ID!, updateProfileInput: CreateProfileInput): Profile!
         createMatch(createMatchInput: CreateMatchInput!): Match!

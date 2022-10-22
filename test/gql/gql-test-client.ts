@@ -7,7 +7,7 @@ import { ContextObj } from "../../src/graphql/resolvers/auth-resolvers";
 
 const schema = makeExecutableSchema({ typeDefs: typedefs, resolvers });
 
-const graphQlTestClient = async (query: any, variables: any, context: ContextObj) => {
+const graphQlTestClient = async (query: any, variables?: any, context?: ContextObj) => {
     try {
         const response = await graphql({
             schema,

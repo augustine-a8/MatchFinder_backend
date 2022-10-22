@@ -5,7 +5,7 @@ import { GraphQLError } from "graphql";
 import { DataSource } from "typeorm";
 import { request } from "express";
 
-import { loginMutation, registerMutation, confirmAccountMutation } from "./gql/mutations/auth-mutations";
+import { loginMutation, registerMutation } from "./gql/mutations/auth-mutations";
 import { ContextObj, LoginArgs } from "../src/graphql/resolvers/auth-resolvers";
 import connectDB, { dropDB } from "./model/test-connection";
 

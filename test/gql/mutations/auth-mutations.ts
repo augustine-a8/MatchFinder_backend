@@ -23,11 +23,3 @@ export const registerMutation = `
         }
     }
 `;
-
-export const confirmAccountMutation = `
-    mutation ($confirmationCode: String!) {
-        confirmAccount(confirmationCode: $confirmationCode) {
-            id email password accountStatus confirmationCode
-        }
-    }
-`;

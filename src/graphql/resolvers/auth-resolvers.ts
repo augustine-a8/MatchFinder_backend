@@ -5,8 +5,9 @@ import bcrypt from "bcrypt";
 import { totp } from "notp";
 
 import { User } from "../../model/entities";
-import { signPayload, JWTData } from "../../util/jwt-utils";
+import { signPayload, JWTData, verifyToken } from "../../util/jwt-utils";
 import sendMail from "../../util/nodemailer-config.util";
+import { AuthenticationError } from "apollo-server-core";
 
 export interface LoginArgs {
     email: string;
@@ -87,6 +88,31 @@ export default {
                 ...user,
                 token,
             };
+        },
+        resetPassword: async (_: any, { newPassword }: { newPassword: string }, context: ContextObj) => {
+            const { db, req } = context;
+            const userRepository = db.getRepository(User);
+
+            const token = req?.headers.authorization?.split("Bearer ")[1];
+
+            if (!token) {
+                throw new AuthenticationError("ResetPassword: JWT should be provided");
+            }
+
+            const { id, email } = verifyToken(token);
+
+            const user = await userRepository.findOne({ where: { id, email } });
+            if (!user) {
+                throw new Error("ResetPassword: User does not exist");
+            }
+
+            newPassword = await bcrypt.hash(newPassword, 12);
+
+            user.password = newPassword;
+
+            await user.save();
+
+            return "Password reset successful";
         },
     },
 };
