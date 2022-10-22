@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm";
-import { Profile, User } from "../../src/model/entities";
+import { Profile, User, Match } from "../../src/model/entities";
 
 const db_username = process.env.PG_USERNAME as string;
 const db_name = process.env.PG_TESTDBNAME as string;
@@ -11,7 +11,7 @@ const TestDataSource = new DataSource({
     username: db_username,
     password: db_password,
     host: "localhost",
-    entities: [User, Profile],
+    entities: [User, Profile, Match],
     synchronize: true,
 });
 

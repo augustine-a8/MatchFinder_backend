@@ -18,6 +18,13 @@ export default gql`
         age: Int!
     }
 
+    type Match {
+        id: ID!
+        ageL: Int!
+        ageH: Int!
+        gender: String!
+    }
+
     enum AccountStatus {
         PENDING
         ACTIVE
@@ -34,11 +41,19 @@ export default gql`
         confirmAccount(confirmationCode: String!): User!
         createProfile(createProfileInput: CreateProfileInput): Profile!
         updateProfile(profileId: ID!, updateProfileInput: CreateProfileInput): Profile!
+        createMatch(createMatchInput: CreateMatchInput!): Match!
+        updateMatch(matchId: ID!, updateMatchInput: CreateMatchInput!): Match!
     }
 
     input CreateProfileInput {
         username: String!
         age: Int!
+        gender: String!
+    }
+
+    input CreateMatchInput {
+        ageL: Int!
+        ageH: Int!
         gender: String!
     }
 `;
