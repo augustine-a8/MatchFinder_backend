@@ -26,7 +26,26 @@ const sendMail = async (receiverAddress: string, confirmationCode: string) => {
             </div>`,
         });
     } catch (err) {
-        console.log("NODEMAILER_ERR: ", err);
+        console.log("NodemailerConfirmationCodeErr: ", err);
+    }
+};
+
+export const sendPasswordResetCode = async (receiverAddress: string, code: string) => {
+    try {
+        await transport.sendMail({
+            from: user,
+            to: receiverAddress,
+            subject: "Reset your password",
+            html: `<div>
+            <h1>Gql Account Password Reset</h1>
+            <h2>Hello ${receiverAddress.split("@")[0]}</h2>
+            <p>Forgot your password?</p>
+            <p>Enter the code: ${code} to create new password</p>
+            <h2>Note: Password reset code will expire after 1 hour</h2>
+            </div>`,
+        });
+    } catch (err) {
+        console.log("NodemailerPasswordResetErr: ", err);
     }
 };
 

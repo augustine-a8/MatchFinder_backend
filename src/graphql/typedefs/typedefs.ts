@@ -25,6 +25,11 @@ export default gql`
         gender: String!
     }
 
+    type ForgotPassword {
+        code: String
+        token: String!
+    }
+
     enum AccountStatus {
         PENDING
         ACTIVE
@@ -39,6 +44,8 @@ export default gql`
         register(email: String!, password: String!): User!
         login(email: String!, password: String!): User!
         resetPassword(newPassword: String!): String!
+        sendForgotPasswordCode(email: String!): ForgotPassword!
+        verifyForgotPasswordCode(code: String!): String!
         confirmAccount(confirmationCode: String!): User!
         resendConfirmationCode: User!
         createProfile(createProfileInput: CreateProfileInput): Profile!
